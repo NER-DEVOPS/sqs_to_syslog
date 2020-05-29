@@ -1,0 +1,1 @@
+1 * * * * /root/sqs_to_syslog/poll_n_write.py

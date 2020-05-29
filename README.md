@@ -10,13 +10,13 @@ This script will poll an AWS SQS queue for Prisma Cloud alerts and then format t
 
 1. Python 3.x or newer
 
-2. Requests (Python library)
+2. Requirements
 
-```sudo pip install requests```
-
-3. YAML (Python library)
-
-```sudo pip install pyyaml```
+```
+yum install gcc
+yum install python3-devel
+pip3 install -r requirements.txt
+```
 
 ### Configuration
 
@@ -36,6 +36,8 @@ The session key for your AWS account. This is only needed when you are using tem
 3. Setup the sqs queue and aws region as well as syslog server(defaults to localhost) in the config/configs.yml
 
 4. Schedule to run the main script via cron or something similar: python poll_n_write.py
+
+see crontab in repo.
 
 ### Run
 

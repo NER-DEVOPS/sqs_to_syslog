@@ -1,12 +1,29 @@
+#!/bin/python3.7
 import logging
 import threading
 import time
 from logging import handlers
-
+import socket
 import boto3
 import botocore
 
 import lib
+import psutil
+import os
+
+def check_proc(processName):
+    for proc in psutil.process_iter():
+        try:
+          if processName.lower() in proc.name().lower():
+            if proc.pid  != os.getpid():
+                return True
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+          pass
+    return False;
+
+if (check_proc("poll_n_write")):
+    # print("there can only be one!")
+    exit(0)
 
 #Config setup for AWS and syslog
 config = lib.ConfigHelper()
