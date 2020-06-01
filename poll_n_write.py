@@ -39,10 +39,11 @@ VisibilityTimeout   = 3600
 syslog_logger     = logging.getLogger('SYSLOG')
 syslog_formatter  = logging.Formatter("%(asctime)s PRISMA_CLOUD %(message)s", "%b %d %H:%M:%S")
 syslog_logger.setLevel(logging.DEBUG)
-
+print("COnnecting to",logging_server)
 syslog_handler = logging.handlers.SysLogHandler(address = (logging_server, 514),
                                                 facility = logging.handlers.SysLogHandler.LOG_LOCAL3,
                                                 socktype=socket.SOCK_STREAM)
+print("COnnected to",logging_server)
 syslog_handler.setFormatter(syslog_formatter)
 syslog_logger.addHandler(syslog_handler)
 
@@ -115,7 +116,7 @@ def _poll_n_write (q,
                     poll_duration,
                     MaxNumberOfMessages,
                     VisibilityTimeout):
-        #qpylib.log('Start polling message from SQS', level='info')
+    print('Start polling message from SQS')
     msgs = q.receive_messages (MaxNumberOfMessages = MaxNumberOfMessages,
                                    WaitTimeSeconds     = poll_duration,
                                    VisibilityTimeout   = VisibilityTimeout)
@@ -347,23 +348,23 @@ def testSQSConnection(  REGION_NAME,
     return True
 
 if __name__ == "__main__":
-             res = poll_queue_n_write(
-                                     REGION_NAME,
-                                           qname,
-                                   poll_interval,
-                                   poll_duration,
-                             MaxNumberOfMessages,
-                               VisibilityTimeout)
+    res = poll_queue_n_write(
+        REGION_NAME,
+        qname,
+        poll_interval,
+        poll_duration,
+        MaxNumberOfMessages,
+        VisibilityTimeout)
 
-if res == True:
-   print("Successfully connnected to SQS queue.")
-   while True:
-    try:
-        time.sleep(100)
-    except KeyboardInterrupt as e:
-        stopThread()
-        break;
-else:
-    print("Error: %s" % res.error_msg)
+    if res == True:
+        print("Successfully connnected to SQS queue.")
+    while True:
+        try:
+            time.sleep(100)
+        except KeyboardInterrupt as e:
+            stopThread()
+            break;
+        else:
+            print("Error: %s" % res.error_msg)
 
 #    print res.error_msg

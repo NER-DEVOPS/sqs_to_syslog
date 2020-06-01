@@ -13,8 +13,7 @@ This script will poll an AWS SQS queue for Prisma Cloud alerts and then format t
 2. Requirements
 
 ```
-yum install gcc
-yum install python3-devel
+yum install -y gcc python3-devel python3-pip
 pip3 install -r requirements.txt
 ```
 
