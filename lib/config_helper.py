@@ -8,6 +8,7 @@ class ConfigHelper(object):
         self.rl_aws_region = config["prisma_cloud"]["aws_region"]
         self.rl_aws_queue = config["prisma_cloud"]["aws_sqs_queue"]
         self.rl_syslog_host = config["prisma_cloud"]["syslog_host"]
+        self.rl_syslog_port = int(config["prisma_cloud"]["syslog_port"])
 
 
     @classmethod

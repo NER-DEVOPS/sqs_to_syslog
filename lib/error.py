@@ -38,4 +38,4 @@ class Error_SQS_Log_Downloader:
         elif self.error_type in err_type_dict:
             msg = err_type_dict[self.error_type]
         
-        self.error_msg = (' '.join([self.error_msg_pre, msg])) if msg else (self.error_msg_actual or "Unrecognized error")
+        self.error_msg = (' '.join([self.error_msg_pre, msg])) if msg else (self.error_msg_actual or "Unrecognized error {} {}".format(self.error_code, self.error_type))

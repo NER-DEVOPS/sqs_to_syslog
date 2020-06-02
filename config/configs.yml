@@ -1,4 +1,8 @@
 prisma_cloud:
   aws_region: us-east-1
   aws_sqs_queue: prisma-special-queue
-  syslog_host:  10.141.250.73
+  aws_account_number : 769125279023
+  # "https://queue.amazonaws.com/769125279023/prisma-special-queue"
+  syslog_host:  127.0.0.1
+  syslog_port: 5514
+  
