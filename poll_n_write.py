@@ -48,14 +48,24 @@ SleepTime = 10
 syslog_logger     = logging.getLogger('SYSLOG')
 syslog_formatter  = logging.Formatter("%(asctime)s PRISMA_CLOUD %(message)s", "%b %d %H:%M:%S")
 syslog_logger.setLevel(logging.DEBUG)
-#debug_print("Connnecting to",logging_server)
+debug_print("Connnecting to" + logging_server + str(logging_port))
+
 syslog_handler = logging.handlers.SysLogHandler(
     address = (logging_server, logging_port),
     facility = logging.handlers.SysLogHandler.LOG_LOCAL3,
-    socktype=socket.SOCK_STREAM)
-#debug_print("Connected to",logging_server)
+    #socktype=socket.SOCK_STREAM
+)
+
+debug_print("Connected to" + logging_server)
 syslog_handler.setFormatter(syslog_formatter)
 syslog_logger.addHandler(syslog_handler)
+
+syslog_handler_localhost = logging.handlers.SysLogHandler(
+    address = "/dev/log",
+    facility = logging.handlers.SysLogHandler.LOG_LOCAL3)
+
+syslog_handler_localhost.setFormatter(syslog_formatter)
+syslog_logger.addHandler(syslog_handler_localhost)
 
 
 #-------------------------------------------------------------------------------
@@ -142,6 +152,7 @@ def _poll_n_write (q,
         for m in msgs:
             try:
                 syslog_str = m.body
+                debug_print ("MSG:{}".format(syslog_str))
                 syslog_logger.info(syslog_str)
                 time.sleep(5)
 
